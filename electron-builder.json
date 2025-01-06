@@ -1,0 +1,16 @@
+{
+    "appId": "dev.iddhi.template",
+    "extraResources": ["dist-app/preload.cjs"],
+    "files": ["dist-app", "dist-ui"],
+    "icon": "./app-icon.png",
+    "mac": {
+        "target": "dmg"
+    },
+    "linux": {
+        "target": "AppImage",
+        "category": "Development"
+    },
+    "win": {
+        "target": ["portable", "msi"]
+    }
+}
