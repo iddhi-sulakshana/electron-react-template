@@ -1,8 +1,10 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
 import { getPreloadPath, getUiPath } from "./pathResolver.js";
-import { getStaticData, pollResource } from "./resourceManager.js";
-import { ipcMainHandle, isDev } from "./utils.js";
+import { getStaticData, pollResource } from "./services/resourceManager.js";
+import { ipcMainHandle } from "./utils/ipc.js";
+import { isDev } from "./utils/environment.js";
+import registerHandlers from "./ipc/index.js";
 
 app.on("ready", () => {
     const mainWindow = new BrowserWindow({
@@ -23,6 +25,5 @@ app.on("ready", () => {
         mainWindow.loadFile(getUiPath());
     }
 
-    pollResource(mainWindow);
-    ipcMainHandle("getStaticData", getStaticData);
+    registerHandlers(mainWindow);
 });

@@ -1,10 +1,7 @@
 import { ipcMain, WebContents, WebFrameMain } from "electron";
 import { pathToFileURL } from "url";
-import { getUiPath } from "./pathResolver.js";
-
-export function isDev() {
-    return process.env.NODE_ENV === "development";
-}
+import { getUiPath } from "../pathResolver.js";
+import { isDev } from "./environment.js";
 
 export function ipcMainHandle<Key extends keyof EventPayloadMapping>(
     key: Key,
@@ -24,7 +21,7 @@ export function ipcWebContentsSend<Key extends keyof EventPayloadMapping>(
     webContents.send(key, payload);
 }
 
-export function validateEventFrame(frame: WebFrameMain | null) {
+function validateEventFrame(frame: WebFrameMain | null) {
     if (!frame) {
         throw new Error("Invalid event frame");
     }
