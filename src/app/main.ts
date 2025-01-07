@@ -2,8 +2,7 @@ import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
 import { getPreloadPath } from "./pathResolver.js";
 import { getStaticData, pollResource } from "./resourceManager.js";
-
-const isDev = process.env.NODE_ENV === "development";
+import { ipcMainHandle, isDev } from "./utils.js";
 
 app.on("ready", () => {
     const mainWindow = new BrowserWindow({
@@ -16,7 +15,7 @@ app.on("ready", () => {
         },
     });
 
-    if (isDev) {
+    if (isDev()) {
         // if app is on development load the frontend from the react live url
         mainWindow.loadURL("http://localhost:3000");
     } else {
@@ -25,8 +24,5 @@ app.on("ready", () => {
     }
 
     pollResource(mainWindow);
-
-    ipcMain.handle("getStaticData", (event) => {
-        return getStaticData();
-    });
+    ipcMainHandle("getStaticData", getStaticData);
 });

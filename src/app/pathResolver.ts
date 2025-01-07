@@ -1,10 +1,11 @@
 import path from "path";
 import { app } from "electron";
+import { isDev } from "./utils.js";
 
 export function getPreloadPath() {
     return path.join(
         app.getAppPath(),
-        process.env.NODE_ENV === "development" ? "." : "..",
+        isDev() ? "." : "..",
         "/dist-app/preload.cjs"
     );
 }
