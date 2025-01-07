@@ -1,6 +1,7 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
 import { getPreloadPath } from "./pathResolver.js";
+import { getStaticData, pollResource } from "./resourceManager.js";
 
 const isDev = process.env.NODE_ENV === "development";
 
@@ -22,4 +23,10 @@ app.on("ready", () => {
         // if not load the frontend from the html file
         mainWindow.loadFile(path.join(app.getAppPath(), "dist-ui/index.html"));
     }
+
+    pollResource(mainWindow);
+
+    ipcMain.handle("getStaticData", (event) => {
+        return getStaticData();
+    });
 });
