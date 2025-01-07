@@ -9,3 +9,7 @@ export function getPreloadPath() {
         "/dist-app/preload.cjs"
     );
 }
+
+export function getUiPath() {
+    return path.join(app.getAppPath(), "/dist-ui/index.html");
+}

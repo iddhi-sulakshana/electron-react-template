@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
-import { getPreloadPath } from "./pathResolver.js";
+import { getPreloadPath, getUiPath } from "./pathResolver.js";
 import { getStaticData, pollResource } from "./resourceManager.js";
 import { ipcMainHandle, isDev } from "./utils.js";
 
@@ -20,7 +20,7 @@ app.on("ready", () => {
         mainWindow.loadURL("http://localhost:3000");
     } else {
         // if not load the frontend from the html file
-        mainWindow.loadFile(path.join(app.getAppPath(), "dist-ui/index.html"));
+        mainWindow.loadFile(getUiPath());
     }
 
     pollResource(mainWindow);
